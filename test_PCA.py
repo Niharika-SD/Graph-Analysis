@@ -25,7 +25,7 @@ from sklearn.decomposition import PCA as sklearnPCA
 
 
 df_aut,df_cont = Split_class()
-task  = 'Praxis.Avg.Total.Errs'
+task  = 'SRS.TotalRaw.Score'
 ds = '0'
 
 x_aut,y_aut,x_cont,y_cont = create_dataset(df_aut,df_cont,task,'/home/niharika-shimona/Documents/Projects/Autism_Network/code/patient_data/')	
@@ -45,17 +45,17 @@ else:
  	y = np.ravel(np.concatenate((y_cont,y_aut),axis =0))
  	fold = 'aut_cont'
 
-#pathname = '/home/niharika-shimona/nsalab-mceh/Users/ndsouza4/Schizophrenia/'
-#task = 'Schizophrenia_eig'
-#cas = ''
+#pathname = '/media/nsalab/Users/ndsouza4/Schizophrenia/'
+#task = 'NCC_eig'
+#cas = 'buf'
 #filename = pathname + task +'.mat'
-
+#
 #data = sio.loadmat(filename)
-#subtx = 'x_'+ fold
+#subtx = 'x_'+ cas
 #data_eg_corr = data[subtx]
 #
 #x = data_eg_corr
-#subty = 'y_'+ fold
+#subty = 'y_'+ cas
 #y =np.ravel(data[subty])
 
 
@@ -102,27 +102,26 @@ for train,test in kf_total.split(x,y):
 	
     learnt_models.append(model)
      
-newpath = r'/home/niharika-shimona/Documents/Projects/Autism_Network/Results/Sanity_Check/Comparative_Analysis/PCA/'+fold+'/' + cast +'/' + task + '/'
+newpath = r'/home/niharika-shimona/Documents/Projects/Autism_Network/Results/Sanity_Check/Comparative_Analysis/PCA/' + cast +'/' + task + '/'
 if not os.path.exists(newpath):
  	os.makedirs(newpath)
 os.chdir(newpath)
 
-fig,ax =plt.subplots()
+fig,ax =plt.subplots(figsize=(10,6))
 font = {'family' : 'normal',
          'weight' : 'bold',
          'size'   : 14}
 matplotlib.rc('font', **font)
 
 ax.scatter(y_train,y_train_AF,color ='red',label = 'train')
-ax.plot([y_test.min(),y_test.max()], [y_test.min(),y_test.max()], 'k--', lw=4)
+#ax.plot([y_test.min(),y_test.max()], [y_test.min(),y_test.max()], 'k--', lw=4)
 ax.plot([y_test.min()-2,y_test.max()+2], [y_test.min()-2, y_test.max()+2], 'k--', lw=4)
 data_mean = np.mean(y_train)
-ax.plot([y_test.min()-2,y_test.max()+2], [data_mean,data_mean], 'k--', lw=2)
+ax.plot([y_test.min()-2,y_test.max()+2], [data_mean,data_mean], 'k--', lw=3)
 plt.ylim(ymax = y_test.max()+5, ymin = y_test.min()-5)
-plt.xlim(xmax =y_test.max()+5, xmin = y_test.min()-5)
 # plt.ylim(ymax = 29, ymin = 5)
 # plt.xlim(xmax =25, xmin = 5)
-ax.scatter(y_test,y_test_AF,color ='green',label = 'test')
+ax.scatter(y_test,y_test_AF,color ='darkcyan',label = 'test')
 ax.legend(loc='best')
 
 ax.set_xlabel('Measured',fontsize =14)

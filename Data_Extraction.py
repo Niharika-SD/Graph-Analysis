@@ -22,7 +22,7 @@ def Split_class():
 	
 	"Splits the dataset into Autism and Controls"
 
-	Location = r'/home/niharika-shimona/Documents/Projects/Autism_Network/Data/matched_data_praxis.xlsx'
+	Location = r'/home/niharika-shimona/Documents/Projects/Autism_Network/Data/matched_data_out.xlsx'
 	df = pd.read_excel(Location,0)
 	mask_cont = df['Primary_Dx'] == 'None' 
 	mask_aut = df['Primary_Dx'] != 'None' 
